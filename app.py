@@ -81,7 +81,7 @@ def index_post():
     if err_msg:
         flash(err_msg, 'error')
     else:
-        flash('City is added successfully..')
+        flash('City is added successfully!')
 
     return redirect(url_for('index_get'))
 
