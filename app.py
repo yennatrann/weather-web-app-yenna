@@ -1,6 +1,8 @@
 # Framework: Flask
 # Description: Create a weather web app with a dashboard where users can enter the name of a city and do a search by clicking a button. I used OpenWeatherApp API with Python request to get the data and return the current weather in that city in the dashboard.
 # OpenWeatherApp Website: https://openweathermap.org/
+# Open web app: https://weather-web-app-yenna.herokuapp.com/
+# Github: https://github.com/yennatrann/weather-web-app-yenna
 
 import requests
 from flask import Flask, render_template, request, url_for, redirect, flash
@@ -79,7 +81,7 @@ def index_post():
     if err_msg:
         flash(err_msg, 'error')
     else:
-        flash('City is added successfully!')
+        flash('City is added successfully..')
 
     return redirect(url_for('index_get'))
 
