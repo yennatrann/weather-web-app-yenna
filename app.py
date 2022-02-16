@@ -23,7 +23,7 @@ class City(db.Model):
 
 
 def get_weather_data(city):
-    url = f'http://api.openweathermap.org/data/2.5/weather?q={ city }&units=imperial&appid=2e7ca4dfd9bd9411a1e050549bb37004'
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={ city }&units=metric&appid=2e7ca4dfd9bd9411a1e050549bb37004'
 
     # Get the response:
     r = requests.get(url).json()
