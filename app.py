@@ -22,12 +22,20 @@ class City(db.Model):
     name = db.Column(db.String(50), nullable=False)
 
 
-def get_weather_data(city):
+def get_weather_data_metric(city):
     url = f'http://api.openweathermap.org/data/2.5/weather?q={ city }&units=metric&appid=2e7ca4dfd9bd9411a1e050549bb37004'
 
     # Get the response:
-    r = requests.get(url).json()
-    return r
+    rM = requests.get(url).json()
+    return rM
+
+
+def get_weather_data_imperial(city):
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={ city }&units=imperial&appid=2e7ca4dfd9bd9411a1e050549bb37004'
+
+    # Get the response:
+    rI = requests.get(url).json()
+    return rI
 
 
 @app.route('/')
@@ -38,15 +46,19 @@ def index_get():
     weather_data = []
 
     for city in cities:
-        r = get_weather_data(city.name)
-        print(r)
+        rM = get_weather_data_metric(city.name)
+        print(rM)
+
+        rI = get_weather_data_imperial(city.name)
+        print(rI)
 
         # Create a dictionary to store all data return from the response:
         weather = {
             'city': city.name,
-            'temperature': r['main']['temp'],
-            'description': r['weather'][0]['description'],
-            'icon': r['weather'][0]['icon'],
+            'temperature_metric': rM['main']['temp'],
+            'temperature_imperial': rI['main']['temp'],
+            'description': rM['weather'][0]['description'],
+            'icon': rM['weather'][0]['icon'],
         }
 
         weather_data.append(weather)
@@ -54,6 +66,7 @@ def index_get():
     return render_template('weather.html', weather_data=weather_data)
 
 
+# Add new city:
 @app.route('/', methods=['POST'])
 def index_post():
     err_msg = ''
@@ -65,7 +78,7 @@ def index_post():
         # Check if the city exists, if not proceed to add city:
         if not existing_city:
             # Check if city is valid city:
-            check_city_valid = get_weather_data(new_city)
+            check_city_valid = get_weather_data_metric(new_city)
 
             if check_city_valid['cod'] == 200:
                 new_city_obj = City(name=new_city)
@@ -86,6 +99,7 @@ def index_post():
     return redirect(url_for('index_get'))
 
 
+# Delete city:
 @app.route('/delete/<name>')
 def delete_city(name):
     city = City.query.filter_by(name=name).first()

@@ -47,7 +47,6 @@
                             {% endfor %}
                         {% endif %}
                         {% endwith %}
-
                     </form>
                 </div>
             </div>
@@ -55,6 +54,21 @@
     </section>
     <section class="section">
         <div class="container">
+            <!-- <div>
+                <form method="GET" action="/filter">
+                    <label for="tempunit">View in:</label>
+                    <select id="tempunit" name="tempunit">
+                        <option value="anyunit">Any Unit</option>
+                        <option value="metric">Celsius</option>
+                        <option value="imperial">Fahrenheit</option>
+                    </select>
+                    <a>
+                        <button type="submit" value="filter">
+                            Filter
+                        </button>
+                    </a>
+                </form>
+            </div> -->
             <div class="columns">
                 <div class="column is-offset-4 is-4">
                     {% for weather in weather_data %}
@@ -70,7 +84,9 @@
                                     <p>
                                         <span class="title">{{ weather.city }}</span>
                                         <br>
-                                        <span class="subtitle">{{ weather.temperature }}° F</span>
+                                        <span class="subtitle">{{ weather.temperature_metric }}°C</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather.temperature_imperial }}°F</span>
                                         <br> {{ weather.description }}
                                     </p>
                                 </div>
@@ -80,7 +96,6 @@
                                     <button class="delete"></button>
                                 </a>
                             </div>
-
                         </article>
                     </div>
                     {% endfor %}
@@ -88,8 +103,6 @@
             </div>
         </div>
     </section>
-    <footer class="footer">
-    </footer>
+    <footer class="footer"></footer>
 </body>
-
 </html>
